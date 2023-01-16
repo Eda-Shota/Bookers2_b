@@ -1,0 +1,4 @@
+<%= form_with url: book_book_comments_path(book), model: book_comment, local:false do |f| %>
+  <%= f.text_area :comment, rows:'5', class: "w-100" %>
+  <%= f.submit "送信" %>
+<% end %>

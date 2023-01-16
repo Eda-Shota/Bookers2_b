@@ -1,0 +1,52 @@
+<h2><%= @range %>s search for"<%= @word %>"</h2>
+
+
+<table class="table">
+  <!--検索対象モデルがUserの時 -->
+  <% if @range == "User" %>
+  
+      <thead>
+        <tr>
+          <th></th>
+          <th>name</th>
+          <th>introduction</th>
+        </tr>
+      </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td>
+            <%= link_to user_path(user) do %>
+              <%= image_tag user.get_profile_image, size: "50x50" %>
+            <% end %>
+          </td>
+          <td><%= user.name %></td>
+          <td><%= user.introduction %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    
+    
+  <% else %>
+    <thead>
+      <tr>
+        <th></th>
+        <th>name</th>
+        <th>Opinion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td>
+            <%= link_to(book.user) do %>
+            <%= image_tag book.user.get_profile_image, size:'50x50' %>
+            <% end %>
+          </td>
+          <td><%= book.title %></td>
+          <td><%= book.body %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>
