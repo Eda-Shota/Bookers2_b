@@ -27,9 +27,8 @@
               <% if @yesterday_book.count == 0 %>
                 n/a
               <% else %>
-
        　        <%= (@the_day_before * 100).round %>
-                <% end %>
+              <% end %>
             </td>
           </tr>
         </tbody>
@@ -49,12 +48,66 @@
                 n/a
               <% else %>
        　        <%= (@the_week_befor * 100).round %>
-                <% end %>
+              <% end %>
             </td>
           </tr>
         </tbody>
       </table>
-      
+
+      <h2>7日間分の投稿数</h2>
+      <table class='table table-bordered'>
+        <thead>
+          <tr>
+            <th>6日前</th>
+            <th>5日前</th>
+            <th>4日前</th>
+            <th>3日前</th>
+            <th>2日前</th>
+            <th>1日前</th>
+            <th>今日</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <% @books.past_week_count.each do |n| %>
+              <td><%= n %></td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+<div class="text-center">
+<h6>7日間の投稿数の比較</h3>
+</div>
+
+<canvas id="myChart"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+var ctx = document.getElementById('myChart');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
+        datasets: [{
+            label: "投稿した本の数",
+            data: <%= @books.past_week_count %>,
+            backgroundColor: ["rgba(0,0,0,0)"],
+            borderColor: ["rgba(0,0,255,1)"],
+            lineTension: 0.3,
+            borderWidth: 3
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                suggestedMax: 10,
+                suggestedMin: 0,
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+    
     </div>
   </div>
 </div>
