@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  protect_from_forgery except: [:search]
   before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:edit, :update]
 
@@ -29,6 +30,20 @@ class UsersController < ApplicationController
       render "edit"
     end
   end
+  
+  def search
+    @user = User.find(params[:user_id])
+    @books = @user.books 
+    @book = Book.new
+    if params[:created_at] == ""
+      @search_book = "日付を選択してください"
+    else
+      create_at = params[:created_at]
+      @search_book = @books.where(['created_at LIKE ? ', "#{create_at}%"]).count
+    end
+      render "users/search.js"
+  end
+
 
   private
 
